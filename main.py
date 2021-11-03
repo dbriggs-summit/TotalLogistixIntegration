@@ -22,7 +22,7 @@ with dynacom_eng.connect() as con:
         logging.error(e)
 
 
-with open(r'C:\Users\davidb.GARRISON\Downloads\TL Orders.csv', 'w', newline='') as csvfile:
+with open(config.output_file, 'w', newline='') as csvfile:
     try:
         csvwriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
         csvwriter.writerow(result.keys())
