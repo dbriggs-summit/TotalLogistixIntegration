@@ -3,6 +3,7 @@ import csv
 import logging
 from logging.config import dictConfig
 import config
+import platform
 
 dictConfig(config.log_config)
 
@@ -10,9 +11,13 @@ dyna_server = config.dynaServer
 dyna_db = config.dynaDBName
 dyna_user = config.dynaUserName
 dyna_password = config.dynaPassword
-dynacom_eng = \
-    create_engine(f'mssql+pyodbc://{dyna_user}:{dyna_password}@{dyna_server}/'
-                  f'{dyna_db}?driver=SQL Server')
+
+dynacom_conn = f'mssql+pyodbc://{dyna_user}:{dyna_password}@{dyna_server}/{dyna_db}'
+if platform.system() == 'Windows':
+    dynacom_driver = 'SQL Server'
+else:
+    dynacom_driver = 'ODBC+Driver+17+for+SQL+Server'
+dynacom_eng = create_engine(dynacom_conn+'?driver='+dynacom_driver)
 
 with dynacom_eng.connect() as con:
     try:
@@ -28,6 +33,6 @@ with open(config.output_file, 'w', newline='') as csvfile:
         csvwriter.writerow(result.keys())
         for line in orders:
             csvwriter.writerow(line)
-    except FileError as e:
+    except IOError as e:
         logging.error(e)
 logging.info('process completed successfully')
