@@ -9,6 +9,7 @@ def push_orders(output_file):
     password = config.ftpPassword
 
     client = SSHClient()
+    client.get_host_keys()
     client.connect(hostname=host,
                    port=port,
                    username=username,
