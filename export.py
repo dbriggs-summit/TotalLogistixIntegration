@@ -9,12 +9,17 @@ def push_orders(output_file):
     password = config.ftpPassword
 
     client = SSHClient()
-    client.get_host_keys()
+    try:
+        host_keys = config.hostKeys
+    except KeyError:
+        host_keys = ''
+
     client.connect(hostname=host,
                    port=port,
                    username=username,
                    password=password,
-                   banner_timeout=30)
+                   banner_timeout=30,
+                   key_filename=host_keys)
 
     sftp = client.open_sftp()
 
