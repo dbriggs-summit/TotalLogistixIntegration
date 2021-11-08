@@ -4,6 +4,7 @@ import logging
 from logging.config import dictConfig
 import config
 import platform
+from export import push_orders
 
 dictConfig(config.log_config)
 
@@ -35,4 +36,6 @@ with open(config.output_file, 'w+', newline='') as csvfile:
             csvwriter.writerow(line)
     except IOError as e:
         logging.error(e)
+
+push_orders(config.output_file)
 logging.info('process completed successfully')
