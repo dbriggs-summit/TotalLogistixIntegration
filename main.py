@@ -5,8 +5,10 @@ from logging.config import dictConfig
 import config
 import platform
 from export import push_orders
+import paramiko
 
 dictConfig(config.log_config)
+logging.getLogger('paramiko').setLevel(logging.INFO)
 
 dyna_server = config.dynaServer
 dyna_db = config.dynaDBName
