@@ -23,7 +23,7 @@ def push_orders(output_file):
 
     # Need to hardcode when accessing windows files from linux due to how os.path.basename works
     # path = 'TL Orders.csv'
-    path = os.path.basename(output_file)
+    path = os.path.join(config.output_dir, os.path.basename(output_file))
     logging.debug(path)
 
     local_path = output_file
