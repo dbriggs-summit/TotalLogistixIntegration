@@ -1,43 +1,49 @@
-from sqlalchemy import create_engine, exc
+from sqlalchemy import exc
 import csv
 import logging
 from logging.config import dictConfig
 import config
-import platform
-from export import push_orders
-import paramiko
-
-dictConfig(config.log_config)
-logging.getLogger('paramiko').setLevel(logging.INFO)
-
-dyna_server = config.dynaServer
-dyna_db = config.dynaDBName
-dyna_user = config.dynaUserName
-dyna_password = config.dynaPassword
-
-dynacom_conn = f'mssql+pyodbc://{dyna_user}:{dyna_password}@{dyna_server}/{dyna_db}'
-if platform.system() == 'Windows':
-    dynacom_driver = 'SQL Server'
-else:
-    dynacom_driver = 'ODBC+Driver+17+for+SQL+Server'
-dynacom_eng = create_engine(dynacom_conn+'?driver='+dynacom_driver)
-
-with dynacom_eng.connect() as con:
-    try:
-        result = con.execute('select * from view_TLOrders')
-        orders = result.fetchall()
-    except exc.SQLAlchemyError as e:
-        logging.error(e)
+from ftp_ops import push_orders, pull_shipments
+from db import get_db
+import argparse
+import sys
 
 
-with open(config.output_file, 'w+', newline='') as csvfile:
-    try:
-        csvwriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
-        csvwriter.writerow(result.keys())
-        for line in orders:
-            csvwriter.writerow(line)
-    except IOError as e:
-        logging.error(e)
+def export_orders():
+    dictConfig(config.log_config)
+    logging.getLogger('paramiko').setLevel(logging.INFO)
 
-push_orders(config.output_file)
-logging.info('process completed successfully')
+    dynacom = get_db()
+
+    with dynacom.connect() as con:
+        try:
+            result = con.execute('select * from view_TLOrders')
+            orders = result.fetchall()
+        except exc.SQLAlchemyError as e:
+            logging.error(e)
+
+    with open(config.output_file, 'w+', newline='') as csvfile:
+        try:
+            csvwriter = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+            csvwriter.writerow(result.keys())
+            for line in orders:
+                csvwriter.writerow(line)
+        except IOError as e:
+            logging.error(e)
+
+    push_orders(config.output_file)
+    logging.info('process completed successfully')
+
+
+def import_shipments():
+    ship_list = pull_shipments()
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description="perform actions that transfer data between Dynacom and Total Logistix")
+    parser.add_argument('action', help="the action to perform. either 'import' or 'export' ")
+    parser.add_argument('ship_type', required='import' in sys.argv,
+                        help="the type of file to import. 'ready' for 'Ready to Ship, ""'ship' for 'Shipped'")
+    args = parser.parse_args()
+    export_orders()
