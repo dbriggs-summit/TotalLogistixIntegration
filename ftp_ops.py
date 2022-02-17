@@ -56,10 +56,9 @@ def pull_shipments(ship_type):
 
     # Need to hardcode when accessing windows files from linux due to how os.path.basename works
     in_path = os.path.join(config.input_dir, in_file)
-    logging.debug(in_path)
+    logging.info(f'getting import file {in_path}')
 
-    with(io.StringIO("")) as f:
-        sftp.getfo(in_path, f)
+    with sftp.file(in_path, 'r') as f:
         ship_list = []
         reader = csv.DictReader(f)
         for row in reader:
