@@ -38,6 +38,8 @@ def export_orders():
 
 
 def import_shipments(ship_type):
+    dictConfig(config.log_config)
+    logging.getLogger('paramiko').setLevel(logging.INFO)
     ship_list = pull_shipments(ship_type)
     dynacom = get_db()
 
