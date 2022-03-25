@@ -47,6 +47,8 @@ def import_shipments(ship_type):
         statement = text("""update invoihdr set x04472490_UniCarrier = :CarrierSCAC, x04472490_UniRate = :Amount,
         TrackingNo = :PRONumber, shipvia = :shipvia where orderid = :OrderNumber""")
         for line in ship_list:
+            if line['Amount'] == 'null':
+                line['Amount'] = 0.00
             try:
                 line['shipvia'] = carrier_codes[line['CarrierSCAC']]
             except KeyError:
@@ -73,7 +75,7 @@ if __name__ == '__main__':
             ship_type = 'ready'
         else:
             raise Exception("shiptype must be 'ship' or 'ready' ")
-        import_shipments('ship')
+        import_shipments(ship_type)
     elif args.action == 'export':
         export_orders()
     else:

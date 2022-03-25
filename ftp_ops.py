@@ -48,22 +48,26 @@ def pull_shipments(ship_type):
     else:
         file_type = 'SA138_Shipped'
     file_list = sftp.listdir(config.input_dir)
-    logging.info(file_list)
+    # logging.info(file_list)
     #file_list = ['SA138_ReadyToShip_202202081630.csv', 'SA138_Shipped_202202081845.csv']
     rs_list = [x for x in file_list if file_type in x]
     rs_list.sort(reverse=True)
-    in_file = rs_list[0]
+    logging.info(rs_list)
+    import_list = [rs_list[0]]
 
-    # Need to hardcode when accessing windows files from linux due to how os.path.basename works
-    in_path = os.path.join(config.input_dir, in_file)
-    logging.info(f'getting import file {in_path}')
+    ship_list = []
+    for in_file in import_list:
+        # Need to hardcode when accessing windows files from linux due to how os.path.basename works
+        in_path = os.path.join(config.input_dir, in_file)
+        logging.info(f'getting import file {in_path}')
 
-    with sftp.file(in_path, 'r') as f:
-        ship_list = []
-        reader = csv.DictReader(f)
-        for row in reader:
-            ship_list.append(row)
-        sftp.close()
-        client.close()
+        with sftp.file(in_path, 'r') as f:
+
+            reader = csv.DictReader(f)
+            for row in reader:
+                ship_list.append(row)
+
+    sftp.close()
+    client.close()
 
     return ship_list
