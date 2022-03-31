@@ -16,6 +16,7 @@ carrier_codes = {
     'ODFL': 'Old Dominion',
     'PAAF': 'Pilot Freight',
     'PITT': 'Pitt Ohio',
+    'PITD': 'Pitt Ohio',
     'PYLE': 'A. Duie Pyle',
     'RDWY': 'YRC',
     'RLCA': 'R&L Carriers',
