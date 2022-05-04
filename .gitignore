@@ -1,5 +1,10 @@
 /config.py
 /apilogs.log
+
+/.DS_Store
+/__pycache__/
+/tlx/
+
 /.idea/modules.xml
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/inspectionProfiles/Project_Default.xml

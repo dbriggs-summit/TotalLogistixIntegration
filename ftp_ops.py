@@ -1,5 +1,5 @@
 import logging
-from paramiko.client import SSHClient
+from paramiko.client import SSHClient, AutoAddPolicy
 import config
 import os
 import csv
@@ -13,6 +13,7 @@ def conn_setup():
     password = config.ftpPassword
 
     client = SSHClient()
+    # client.set_missing_host_key_policy(AutoAddPolicy())
     client.load_system_host_keys()
 
     client.connect(hostname=host,

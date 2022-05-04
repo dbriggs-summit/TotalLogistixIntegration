@@ -49,6 +49,13 @@ def import_shipments(ship_type):
         for line in ship_list:
             if line['Amount'] == 'null':
                 line['Amount'] = 0.00
+            if line['CarrierSCAC'] in ['CTII','CETR'] and len(line['PRONumber'].strip()) == 11:
+                # transform central transport tracking
+                # to include hypens ex. 555-1234567-1
+                tracking = line['PRONumber']
+                dashed_tracking = tracking[:3] + '-' + tracking[3:]
+                dashed_tracking = dashed_tracking[0:-1] + '-' + dashed_tracking[-1]
+                line['PRONumber'] = dashed_tracking
             try:
                 line['shipvia'] = carrier_codes[line['CarrierSCAC']]
             except KeyError:
