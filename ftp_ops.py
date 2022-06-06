@@ -46,6 +46,8 @@ def pull_shipments(ship_type):
     sftp = client.open_sftp()
     if ship_type == 'ready':
         file_type = 'SA138_ReadyToShip'
+    elif ship_type == 'deferred':
+        file_type = 'SA138_Deferred'
     else:
         file_type = 'SA138_Shipped'
     file_list = sftp.listdir(config.input_dir)
@@ -53,7 +55,7 @@ def pull_shipments(ship_type):
     #file_list = ['SA138_ReadyToShip_202202081630.csv', 'SA138_Shipped_202202081845.csv']
     rs_list = [x for x in file_list if file_type in x]
     rs_list.sort(reverse=True)
-    logging.info(rs_list)
+    # logging.info(rs_list)
     import_list = [rs_list[0]]
 
     ship_list = []
