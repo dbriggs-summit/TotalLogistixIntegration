@@ -48,6 +48,8 @@ def pull_shipments(ship_type):
         file_type = 'SA138_ReadyToShip'
     elif ship_type == 'deferred':
         file_type = 'SA138_Deferred'
+    elif ship_type == 'shipreport':
+        file_type = 'SA138_ShipmentReport'
     else:
         file_type = 'SA138_Shipped'
     file_list = sftp.listdir(config.input_dir)

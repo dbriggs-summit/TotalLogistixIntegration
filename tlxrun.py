@@ -59,6 +59,16 @@ def import_shipments(ship_type):
                                 f"number {line['PRONumber']} for amount {line['Amount']}")
                 except exc.SQLAlchemyError as e:
                     logging.error(e)
+        elif ship_type == 'shipreport':
+            statement = text("""update invoihdr set x04472474_ShippedDate = :SignedOn where orderid = :BL""")
+            for line in ship_list:
+                if line['SignedOn'] == 'NULL':
+                    continue
+                try:
+                    con.execute(statement, **line)
+                    logging.info(f"Order {line['BL']} updated: signed on {line['SignedOn']}")
+                except exc.SQLAlchemyError as e:
+                    logging.error(e)
         else:
             statement = text("""update invoihdr set x04472490_UniCarrier = :CarrierSCAC, x04472490_UniRate = :Amount,
             TrackingNo = :PRONumber, shipvia = :shipvia where orderid = :OrderNumber""")
@@ -80,7 +90,7 @@ if __name__ == '__main__':
         description="perform actions that transfer data between Dynacom and Total Logistix")
     parser.add_argument('action', help="the action to perform. either 'import' or 'export' ")
     parser.add_argument('-s', '--shiptype',  required='import' in sys.argv,
-                        help="the type of file to import. 'ready' for 'Ready to Ship, ""'ship' for 'Shipped', 'deferred' for 'Deferred'")
+                        help="the type of file to import. 'ready' for 'Ready to Ship, ""'ship' for 'Shipped', 'deferred' for 'Deferred', 'shipreport' for 'ShipmentReport'")
     args = parser.parse_args()
     if args.action == 'import':
         if args.shiptype == 'ship':
@@ -89,8 +99,10 @@ if __name__ == '__main__':
             ship_type = 'ready'
         elif args.shiptype == 'deferred':
             ship_type = 'deferred'
+        elif args.shiptype == 'shipreport':
+            ship_type = 'shipreport'
         else:
-            raise Exception("shiptype must be 'ship', 'ready' or 'deferred' ")
+            raise Exception("shiptype must be 'ship', 'ready', 'deferred' or 'shipreport'")
         import_shipments(ship_type)
     elif args.action == 'export':
         export_orders()

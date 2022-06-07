@@ -1,5 +1,6 @@
 /config.py
 /apilogs.log
+/apilogs.log*
 
 /.DS_Store
 /__pycache__/
