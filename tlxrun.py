@@ -60,9 +60,9 @@ def import_shipments(ship_type):
                 except exc.SQLAlchemyError as e:
                     logging.error(e)
         elif ship_type == 'shipreport':
-            statement = text("""update invoihdr set x04472474_ShippedDate = :SignedOn where orderid = :BL""")
+            statement = text("""update invoihdr set usrTMSSignedDate = :SignedOn where orderid = :BL""")
             for line in ship_list:
-                if line['SignedOn'] == 'NULL':
+                if line['SignedOn'].lower() == 'null':
                     continue
                 try:
                     con.execute(statement, **line)
