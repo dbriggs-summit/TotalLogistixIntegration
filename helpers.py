@@ -1,11 +1,17 @@
 from carrier_codes import carrier_codes
-
+from datetime import datetime
 
 def clean_amount(amount):
     if amount == 'null':
         return 0.00
     # keep default
     return amount
+
+def clean_delayed_reason(delayed_reason):
+    if delayed_reason == 'null':
+        return ''
+    # keep default
+    return delayed_reason
 
 def format_tracking(carrier_code, tracking):
     # transform central transport tracking
@@ -27,3 +33,10 @@ def get_carrier_name(carrier_code):
         shipvia = carrier_code
 
     return shipvia
+
+def valid_date_format(input_date):
+    date_format = "%Y-%m-%d"
+    try:
+        return bool(datetime.strptime(input_date, date_format))
+    except ValueError:
+        return False

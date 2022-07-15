@@ -7,7 +7,7 @@ import config
 from ftp_ops import push_orders, pull_shipments
 from db import get_db
 # from carrier_codes import carrier_codes
-from helpers import clean_amount, format_tracking, get_carrier_name
+from helpers import clean_amount, clean_delayed_reason, format_tracking, get_carrier_name, valid_date_format
 import argparse
 import sys
 
@@ -53,6 +53,10 @@ def import_shipments(ship_type):
                 line['Amount'] = clean_amount(line['Amount'])
                 line['PRONumber'] = format_tracking(line['CarrierSCAC'], line['PRONumber'])
                 line['shipvia'] = get_carrier_name(line['CarrierSCAC'])
+                line['ReasonCode'] = clean_delayed_reason(line['ReasonCode'])
+                if not valid_date_format(line['DelayedDate']):
+                    line['DelayedDate'] = ''
+
                 try:
                     con.execute(statement, **line)
                     logging.info(f"Order {line['OrderNumber']} delayed '{line['ReasonCode']}' on {line['DelayedDate']}. Updated: carrier {line['CarrierSCAC']} with tracking"
