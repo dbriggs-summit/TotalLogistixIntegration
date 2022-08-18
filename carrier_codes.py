@@ -1,6 +1,7 @@
 carrier_codes = {
     'ABFS': 'ABF',
     'AWC': 'AllStatesWorld Cargo',
+    'AWCI': 'AllStatesWorld Cargo',
     'ASTI': 'AllStatesWorld Cargo',
     'CNWY': 'XPO Logistics',
     'CTII': 'Central Transport',
