@@ -6,6 +6,7 @@ carrier_codes = {
     'CNWY': 'XPO Logistics',
     'CTII': 'Central Transport',
     'CETR': 'Central Transport',
+    'CEVA': 'CEVA',
     'DAYR': 'Day & Ross Inc',
     'DYLT': 'Daylight Trans',
     'EDXI': 'EDI Express',
