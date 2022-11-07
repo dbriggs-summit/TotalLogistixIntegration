@@ -24,6 +24,7 @@ carrier_codes = {
     'PITT': 'Pitt Ohio',
     'PITD': 'Pitt Ohio',
     'PYLE': 'A. Duie Pyle',
+    'PYLR': 'A. Duie Pyle',
     'RDWY': 'YRC',
     'RLCA': 'R&L Carriers',
     'RNLO': 'R&L Carriers',
