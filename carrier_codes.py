@@ -42,5 +42,6 @@ carrier_codes = {
     'UPS2': 'UPS 2nd Day',
     'UPSN': 'UPS Next Day',
     'UPSG': 'UPS Ground',
-    'FEDN': 'Fedex Next Day'
+    'FEDN': 'Fedex Next Day',
+    'HJCS': 'JB Hunt'
 }
