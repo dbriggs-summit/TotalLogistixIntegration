@@ -1,4 +1,5 @@
 carrier_codes = {
+    'AVRT': 'AVERITT',
     'ABFS': 'ABF',
     'AWC': 'AllStatesWorld Cargo',
     'AWCI': 'AllStatesWorld Cargo',
