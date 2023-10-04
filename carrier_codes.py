@@ -1,6 +1,7 @@
 carrier_codes = {
     'AVRT': 'AVERITT',
     'ABFS': 'ABF',
+    'AFFH': 'American Fast Freight',
     'AWC': 'AllStatesWorld Cargo',
     'AWCI': 'AllStatesWorld Cargo',
     'ASTI': 'AllStatesWorld Cargo',
