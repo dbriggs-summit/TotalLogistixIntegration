@@ -45,5 +45,8 @@ carrier_codes = {
     'UPSN': 'UPS Next Day',
     'UPSG': 'UPS Ground',
     'FEDN': 'Fedex Next Day',
-    'HJCS': 'JB Hunt'
+    'HJCS': 'JB Hunt',
+    'JNYF': 'Journey Freight Int',
+    'FCSY': 'Frontline Freight',
+    'NTGO': 'Nolan Transportation Group'
 }
