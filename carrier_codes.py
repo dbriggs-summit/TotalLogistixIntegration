@@ -48,5 +48,7 @@ carrier_codes = {
     'HJCS': 'JB Hunt',
     'JNYF': 'Journey Freight Int',
     'FCSY': 'Frontline Freight',
-    'NTGO': 'Nolan Transportation Group'
+    'NTGO': 'Nolan Transportation Group',
+    'TAGB': 'Bourassa Transport',
+    'PMML': 'Pace Marathon'
 }
