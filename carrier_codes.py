@@ -50,5 +50,9 @@ carrier_codes = {
     'FCSY': 'Frontline Freight',
     'NTGO': 'Nolan Transportation Group',
     'TAGB': 'Bourassa Transport',
-    'PMML': 'Pace Marathon'
+    'PMML': 'Pace Marathon',
+    'CWAW': 'Cowan Logistics',
+    'RBCG': 'CH Robinson Worldwide',
+    'FILF': 'Freeway International Logistics',
+    'TQYL': 'Total Quality Logistics'
 }
