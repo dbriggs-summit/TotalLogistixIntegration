@@ -13,7 +13,10 @@ def conn_setup():
     password = config.ftpPassword
 
     client = SSHClient()
+
+    # Comment line for production
     # client.set_missing_host_key_policy(AutoAddPolicy())
+
     client.load_system_host_keys()
 
     client.connect(hostname=host,
@@ -50,6 +53,8 @@ def pull_shipments(ship_type):
         file_type = 'SA138_Deferred'
     elif ship_type == 'shipreport':
         file_type = 'SA138_DailyShipmentReport'
+    elif ship_type == 'parcel':
+        file_type = 'SA138_DailyParcelShipmentReport'
     else:
         file_type = 'SA138_Shipped'
     file_list = sftp.listdir(config.input_dir)

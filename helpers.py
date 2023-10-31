@@ -1,4 +1,5 @@
 from carrier_codes import carrier_codes
+from parcel_codes import parcel_codes
 from datetime import datetime
 
 def clean_amount(amount):
@@ -31,6 +32,15 @@ def get_carrier_name(carrier_code):
         shipvia = carrier_codes[carrier_code]
     except KeyError:
         shipvia = carrier_code
+
+    return shipvia
+
+def get_parcel_carrier_name(parcel_code):
+    shipvia = ""
+    try:
+        shipvia = parcel_codes[parcel_code]
+    except KeyError:
+        shipvia = parcel_code
 
     return shipvia
 
