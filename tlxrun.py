@@ -7,7 +7,7 @@ import config
 from ftp_ops import push_orders, pull_shipments
 from db import get_db
 # from carrier_codes import carrier_codes
-from helpers import clean_amount, clean_delayed_reason, format_tracking, get_carrier_name, valid_date_format
+from helpers import clean_amount, clean_delayed_reason, format_tracking, get_carrier_name, valid_date_format, get_parcel_carrier_name
 import argparse
 import sys
 
@@ -73,6 +73,17 @@ def import_shipments(ship_type):
                     logging.info(f"Order {line['BL']} updated: signed on {line['SignedOn']}")
                 except exc.SQLAlchemyError as e:
                     logging.error(e)
+        elif ship_type == 'parcel':
+            statement = text("""update invoihdr set x04472490_UniCarrier = :CarrierSCAC,
+            TrackingNo = :TrackingNumber, shipvia = :shipvia where orderid = :SONumber""")
+            for line in ship_list:
+                line['shipvia'] = get_parcel_carrier_name(line['CarrierSCAC'])
+                try:
+                    con.execute(statement, **line)
+                    logging.info(f"Order {line['SONumber']} updated: carrier {line['CarrierSCAC']} with tracking"
+                                f"number {line['TrackingNumber']}")
+                except exc.SQLAlchemyError as e:
+                    logging.error(e)
         else:
             statement = text("""update invoihdr set x04472490_UniCarrier = :CarrierSCAC, x04472490_UniRate = :Amount,
             TrackingNo = :PRONumber, shipvia = :shipvia where orderid = :OrderNumber""")
@@ -105,8 +116,10 @@ if __name__ == '__main__':
             ship_type = 'deferred'
         elif args.shiptype == 'shipreport':
             ship_type = 'shipreport'
+        elif args.shiptype == 'parcel':
+            ship_type = 'parcel'
         else:
-            raise Exception("shiptype must be 'ship', 'ready', 'deferred' or 'shipreport'")
+            raise Exception("shiptype must be 'ship', 'ready', 'deferred', 'shipreport' or 'parcel'")
         import_shipments(ship_type)
     elif args.action == 'export':
         export_orders()
