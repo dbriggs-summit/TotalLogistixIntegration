@@ -53,9 +53,9 @@ scp filename.csv <user>@<host>:/path-to-project-root/.
 # Local FTP for testing on macbook
 
 - create another user from settings for ftp use
-- settings > General > Turn on Remote Login
+- settings > General > Sharing > Turn on Remote Login
 - click info icon and 'Allow full disk access for remote users' for FTP user
 - create a folder in your Downloads folder
 - TODO forgot how to allow access for FTP
 
-NOTE: Turn on Remote Login when done
+NOTE: Turn off Remote Login when done
