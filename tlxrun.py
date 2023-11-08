@@ -74,10 +74,13 @@ def import_shipments(ship_type):
                 except exc.SQLAlchemyError as e:
                     logging.error(e)
         elif ship_type == 'parcel':
-            statement = text("""update invoihdr set x04472490_UniCarrier = :CarrierSCAC,
+            statement = text("""update invoihdr set x04472490_UniCarrier = :CarrierSCAC, x04472474_Delivered = :Delivered, x04472474_DeliveredBy = :DeliveredBy, x04472474_DeliveredDate = :DeliveredDate,
             TrackingNo = :TrackingNumber, shipvia = :shipvia where orderid = :SONumber""")
             for line in ship_list:
                 line['shipvia'] = get_parcel_carrier_name(line['CarrierSCAC'])
+                line['Delivered'] = 1
+                line['DeliveredBy'] = 'Postback'
+                line['DeliveredDate'] = line['Pick Up Date']
                 try:
                     con.execute(statement, **line)
                     logging.info(f"Order {line['SONumber']} updated: carrier {line['CarrierSCAC']} with tracking"
