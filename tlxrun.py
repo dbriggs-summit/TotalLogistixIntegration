@@ -7,7 +7,7 @@ import config
 from ftp_ops import push_orders, pull_shipments
 from db import get_db
 # from carrier_codes import carrier_codes
-from helpers import clean_amount, clean_delayed_reason, format_tracking, get_carrier_name, valid_date_format, get_parcel_carrier_name
+from helpers import clean_amount, clean_delayed_reason, format_tracking, get_carrier_name, valid_date_format, get_parcel_carrier_name, set_delivered_date
 import argparse
 import sys
 
@@ -80,7 +80,7 @@ def import_shipments(ship_type):
                 line['shipvia'] = get_parcel_carrier_name(line['CarrierSCAC'])
                 line['Delivered'] = 1
                 line['DeliveredBy'] = 'Postback'
-                line['DeliveredDate'] = line['Pick Up Date']
+                line['DeliveredDate'] = set_delivered_date(line['Pick Up Date'])
                 try:
                     con.execute(statement, **line)
                     logging.info(f"Order {line['SONumber']} updated: carrier {line['CarrierSCAC']} with tracking"

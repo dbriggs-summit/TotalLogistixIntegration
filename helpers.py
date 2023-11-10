@@ -1,6 +1,6 @@
 from carrier_codes import carrier_codes
 from parcel_codes import parcel_codes
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def clean_amount(amount):
     if amount == 'null':
@@ -50,3 +50,18 @@ def valid_date_format(input_date):
         return bool(datetime.strptime(input_date, date_format))
     except ValueError:
         return False
+
+# Return 1 day after the given date, skipping weekends
+def set_delivered_date(date_string):
+    date_object = datetime.strptime(date_string, "%m/%d/%Y")
+
+    # Loop until a non-weekend date is found
+    while True:
+        date_object += timedelta(days=1)
+        if not is_weekend(date_object):
+            break
+
+    return date_object.strftime("%m/%d/%Y")
+
+def is_weekend(date):
+    return date.weekday() in [5, 6]  # 5 is Saturday, 6 is Sunday
