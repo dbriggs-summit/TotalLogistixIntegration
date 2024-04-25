@@ -59,3 +59,12 @@ scp filename.csv <user>@<host>:/path-to-project-root/.
 - TODO forgot how to allow access for FTP
 
 NOTE: Turn off Remote Login when done
+
+# Troubleshooting
+
+Issue with dlopen
+
+```sh
+# uninstall pyodbc and install pre-release version
+pip3 install --pre --no-binary :all: pyodbc
+```
