@@ -54,5 +54,8 @@ carrier_codes = {
     'CWAW': 'Cowan Logistics',
     'RBCG': 'CH Robinson Worldwide',
     'FILF': 'Freeway International Logistics',
-    'TQYL': 'Total Quality Logistics'
+    'TQYL': 'Total Quality Logistics',
+    'CWAS': 'Cowan Logistics',
+    '_CPU': 'Customer Pick Up',
+    'TTFD': 'Trinity Logistics'
 }
