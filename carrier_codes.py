@@ -58,5 +58,6 @@ carrier_codes = {
     'CWAS': 'Cowan Logistics',
     '_CPU': 'Customer Pick Up',
     'TTFD': 'Trinity Logistics',
-    'STDE': 'Stella Delivery'
+    'STDE': 'Stella Delivery',
+    'NDLV': 'NonstopDelivery'
 }
