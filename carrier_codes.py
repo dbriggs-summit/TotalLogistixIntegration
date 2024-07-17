@@ -57,5 +57,6 @@ carrier_codes = {
     'TQYL': 'Total Quality Logistics',
     'CWAS': 'Cowan Logistics',
     '_CPU': 'Customer Pick Up',
-    'TTFD': 'Trinity Logistics'
+    'TTFD': 'Trinity Logistics',
+    'STDE': 'Stella Delivery'
 }
