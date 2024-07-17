@@ -59,5 +59,6 @@ carrier_codes = {
     '_CPU': 'Customer Pick Up',
     'TTFD': 'Trinity Logistics',
     'STDE': 'Stella Delivery',
-    'NDLV': 'NonstopDelivery'
+    'NDLV': 'NonstopDelivery',
+    '_HUB': 'NonstopDelivery'
 }
